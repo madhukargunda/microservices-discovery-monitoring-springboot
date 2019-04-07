@@ -1,0 +1,42 @@
+#server:
+#  port: ${PORT:2222}
+  
+spring:
+  application:
+    name: account-service
+#  boot:
+#    admin:
+#      client:
+#        url:
+#        - http://myadmin-console-india:9001
+
+#eureka:
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false 
+#    serviceUrl:
+#      defaultZone: http://localhost:7001/eureka/
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+    
+eureka:        
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-east-india:7003/eureka 
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        
+  endpoint:
+    health:
+      show-details: always
+      
+      
+
+
+
+

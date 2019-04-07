@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: myBootAdminServer
+    
+server:
+  port: 9001
+
+
+  
