@@ -4,12 +4,17 @@ server:
 spring:
   application:
     name: customer-service
-  profiles : default
-#  boot:
-#    admin:
-#      client:
-#        url:
-#        - http://myadmin-console-india:9001
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false  
+       
+  boot:
+    admin:
+      client:
+        url:
+        - http://myadmin-console-india:9001
+        enabled: false
     
 
 management:

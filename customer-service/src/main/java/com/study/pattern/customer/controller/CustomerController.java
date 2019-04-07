@@ -27,9 +27,9 @@ public class CustomerController {
 		customers.add(new Customer(4, "12348", "Karolina Lewandowska", CustomerType.INDIVIDUAL));
 	}
 	
-	@GetMapping("/customers/pesel/{pesel}")
-	public Customer findByPesel(@PathVariable("pesel") String pesel) {
-		logger.info(String.format("Customer.findByPesel(%s)", pesel));
+	@GetMapping("/customers/{customerNumber}")
+	public Customer findByCustomerId(@PathVariable("customerNumber") String pesel) {
+		logger.info(String.format("Customer.customerNumber(%s)", pesel));
 		return customers.stream().filter(it -> it.getPesel().equals(pesel)).findFirst().get();	
 	}
 	

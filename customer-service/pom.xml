@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>study.pattern.api</groupId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<artifactId>customer-service</artifactId>
 
 	<parent>
@@ -33,10 +33,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-	<!-- 	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-jpa</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
@@ -93,14 +91,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-
-	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.cloud</groupId> 
-		<artifactId>spring-cloud-dependencies</artifactId> <version>${spring-cloud.version}</version> 
-		<type>pom</type> <scope>import</scope> </dependency> <dependency> <groupId>de.codecentric</groupId> 
-		<artifactId>spring-boot-admin-dependencies</artifactId> <version>${spring-boot-admin.version}</version> 
-		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
-
-
 	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-rest-hal-browser -->
 	<build>
 		<finalName>customer-service</finalName>
@@ -118,6 +108,36 @@
 							<goal>repackage</goal>
 						</goals>
 					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
+				<configuration>
+					<imageName>madhukargunda/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>1.0</imageTag>
+					</imageTags>
+					<dockerDirectory>${project.basedir}</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+							<!-- <goal>push</goal> -->
+						</goals>
+					</execution>
+
 				</executions>
 			</plugin>
 		</plugins>
