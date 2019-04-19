@@ -9,8 +9,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.study.pattern.eureka</groupId>
-	<artifactId>eureka-service-discovery</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>eureka-service-registry</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>eureka-service-discovery</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -59,6 +59,47 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.study.pattern.eureka.EurekaServiceDiscoveryApplication</mainClass>
+					<addResources>true</addResources>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
+				<configuration>
+					<imageName>madhukargunda/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>1.0</imageTag>
+					</imageTags>
+					<dockerDirectory>${project.basedir}</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+							<!-- <goal>push</goal> -->
+						</goals>
+					</execution>
+
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

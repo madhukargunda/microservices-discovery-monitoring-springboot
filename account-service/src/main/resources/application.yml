@@ -1,29 +1,33 @@
-#server:
-#  port: ${PORT:2222}
+server:
+  port: ${PORT:2222}
   
 spring:
   application:
     name: account-service
-#  boot:
-#    admin:
-#      client:
-#        url:
-#        - http://myadmin-console-india:9001
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false
+    
+  boot:
+    admin:
+      client:
+        url:
+        - http://myadmin-console-india:9001
+        enabled: false
 
-#eureka:
-#  client:
-#    fetch-registry: false
-#    register-with-eureka: false 
-#    serviceUrl:
-#      defaultZone: http://localhost:7001/eureka/
-#  server:
-#    wait-time-in-ms-when-sync-empty: 0
-    
-eureka:        
+eureka:
   client:
+    enabled: false
+    fetch-registry: false
+    register-with-eureka: false 
     serviceUrl:
+      #defaultZone: http://localhost:7001/eureka/
       defaultZone: http://eureka-east-india:7003/eureka 
-    
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+ 
+
 management:
   endpoints:
     web:
@@ -35,7 +39,9 @@ management:
     health:
       show-details: always
       
-      
+# @EnableDiscoveryClient you have to set all of the following properties in application.properties to disable the service registration
+# spring.cloud.service-registry.auto-registration.enabled=false
+# eureka.client.enabled=false 
 
 
 
