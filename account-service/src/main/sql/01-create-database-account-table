@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS `microservices_project`;
+USE `microservices_project`;
+
+DROP TABLE IF EXISTS `account`;
+
+CREATE TABLE `account` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(12) NOT NULL,
+  `account_number` varchar(45) NOT NULL,
+  `account_type` varchar(45) NOT NULL,
+  `date_created` DATETIME NOT NULL,
+  `date_modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
