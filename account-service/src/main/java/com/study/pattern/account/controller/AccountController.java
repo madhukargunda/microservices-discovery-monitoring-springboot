@@ -1,10 +1,10 @@
 package com.study.pattern.account.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,43 +12,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.study.pattern.account.dto.AccountResponse;
 import com.study.pattern.account.model.Account;
+import com.study.pattern.account.repository.AccountRepository;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-
-	private List<Account> accounts;
+	
+	@Autowired
+	AccountRepository accountRepository;
 	
 	protected Logger logger = Logger.getLogger(AccountController.class.getName());
-	
-	public AccountController() {
-		accounts = new ArrayList<>();
-		accounts.add(new Account(1, 1, "111111"));
-		accounts.add(new Account(2, 2, "222222"));
-		accounts.add(new Account(3, 3, "333333"));
-		accounts.add(new Account(4, 4, "444444"));
-		accounts.add(new Account(5, 1, "555555"));
-		accounts.add(new Account(6, 2, "666666"));
-		accounts.add(new Account(7, 2, "777777"));
-	}
 	
 	
 	@GetMapping("{number}")
 	public AccountResponse<Account> findByNumber(@PathVariable("number") String number) {
 		logger.info(String.format("Account.findByNumber(%s)", number));
-		return new AccountResponse<Account>(accounts.stream().filter(it -> it.getNumber().equals(number)).findFirst().get());
+		return new AccountResponse<Account>(accountRepository.findAll().stream().filter(it -> it.getAccountNumber().equals(number)).findFirst().orElse(null));
 	}
 	
 	@GetMapping("customer/{customer}")
 	public AccountResponse<List<Account>> findByCustomer(@PathVariable("customer") Integer customerId) {
 		logger.info(String.format("Account.findByCustomer(%s)", customerId));
-		return new AccountResponse<List<Account>>(accounts.stream().filter(it -> it.getCustomerId().intValue()==customerId.intValue()).collect(Collectors.toList()));
+		return new AccountResponse<List<Account>>(accountRepository.findAll().stream().filter(it -> it.getCustomerId().intValue()==customerId.intValue()).collect(Collectors.toList()));
 	}
 	
 	@GetMapping("")
 	public  AccountResponse<List<Account>> findAll() {
 		logger.info("Account.findAll()");
-		return new AccountResponse<List<Account>>(accounts);
+		return new AccountResponse<List<Account>>(accountRepository.findAll());
 	}
 	
 }
