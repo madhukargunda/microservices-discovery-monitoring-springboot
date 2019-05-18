@@ -21,7 +21,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-	@PostMapping("/{customerId}")
+	@GetMapping("/{customerId}")
 	public Customer findByCustomerId(@PathVariable("customerId") String customerId) {
 		log.info("Getting Customer with Customer ID: {}", customerId);
 		return customerService.findByCustomerId(customerId);

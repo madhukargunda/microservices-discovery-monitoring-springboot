@@ -14,7 +14,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("SELECT DISTINCT c from Customer c WHERE c.customer_id = :customerId")
     public Customer findByCustomerId(@Param("customerId") String customerId);
 
-    @Query("SELECT c from Customer c WHERE c.customer_name = :customerName")
-    public Customer findByCustomerName(@Param("customerName") String customerName);
+    @Query("SELECT c from Customer c WHERE c.name = :name")
+    public Customer findByCustomerName(@Param("name") String name);
 
 }
