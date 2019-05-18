@@ -22,7 +22,7 @@ public class Account {
 	@Id
 	@Column(name = "id")
 	private Integer id;
-	// TODO: Is this the pesel number?
+
 	@Column(name = "customer_id")
 	private Integer customerId;
 
