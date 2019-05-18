@@ -20,8 +20,8 @@ public class Customer {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "pesel")
-	private String pesel;
+	@Column(name = "customer_id")
+	private String customerId;
 	
 	@Column(name = "name")
 	private String name;
@@ -29,9 +29,15 @@ public class Customer {
 	@Column(name = "customer_type")
 	@Enumerated(EnumType.STRING)
 	private CustomerType type;
-	// TODO: Removed list as there is no one to many relationship. Is this correct?
+
 	@Column(name = "account_number")
 	private String accountNumber;
+
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
+	@Column(name = "email_address")
+	private String emailAddress;
 	
 	@Column(name = "date_joined")
 	private Date dateJoined;

@@ -1,41 +1,56 @@
 package com.study.pattern.customer.controller;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
-import java.util.logging.Logger;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.study.pattern.customer.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.study.pattern.customer.model.Customer;
-import com.study.pattern.customer.model.CustomerType;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@Slf4j
 @RestController
+@RequestMapping("customers")
 public class CustomerController {
-	
-	
-	protected Logger logger = Logger.getLogger(CustomerController.class.getName());
-	
-	private List<Customer> customers;
-	
-	public CustomerController() {
-		customers = new ArrayList<>();
-		customers.add(new Customer(1, "12345", "Adam Kowalski", CustomerType.INDIVIDUAL));
-		customers.add(new Customer(2, "12346", "Anna Malinowska", CustomerType.INDIVIDUAL));
-		customers.add(new Customer(3, "12347", "Paweł Michalski", CustomerType.INDIVIDUAL));
-		customers.add(new Customer(4, "12348", "Karolina Lewandowska", CustomerType.INDIVIDUAL));
+
+	@Autowired
+	private CustomerService customerService;
+
+	@PostMapping("/{customerId}")
+	public Customer findByCustomerId(@PathVariable("customerId") String customerId) {
+		log.info("Getting Customer with Customer ID: {}", customerId);
+		return customerService.findByCustomerId(customerId);
 	}
 	
-	@GetMapping("/customers/{customerNumber}")
-	public Customer findByCustomerId(@PathVariable("customerNumber") String pesel) {
-		logger.info(String.format("Customer.customerNumber(%s)", pesel));
-		return customers.stream().filter(it -> it.getPesel().equals(pesel)).findFirst().get();	
-	}
-	
-	@GetMapping("/customers")
+	@GetMapping("/")
 	public List<Customer> findAll() {
-		logger.info("Customer.findAll()");
-		return customers;
+		log.info("Finding all Customers");
+		return customerService.findAll();
 	}
+
+	@PostMapping("/")
+	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
+		Customer createdCustomer = customerService.createCustomer(customer);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdCustomer.getCustomerId())
+				.toUri();
+		return ResponseEntity.created(uri).build();
+	}
+
+	@PutMapping("/{customerId}")
+	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
+		Customer updatedCustomer = customerService.updateCustomer(customer);
+		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{customerId}")
+	public ResponseEntity<Void> deleteCustomer(@PathVariable("customerId") String customerId){
+		customerService.deleteCustomer(customerId);
+		return ResponseEntity.noContent().build();
+	}
+
 }
