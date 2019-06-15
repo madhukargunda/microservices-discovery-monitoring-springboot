@@ -117,7 +117,7 @@
 				<configuration>
 					<imageName>madhukargunda/${project.artifactId}</imageName>
 					<imageTags>
-						<imageTag>1.0</imageTag>
+						<imageTag>2.0</imageTag>
 					</imageTags>
 					<dockerDirectory>${project.basedir}</dockerDirectory>
 					<resources>

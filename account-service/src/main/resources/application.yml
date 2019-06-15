@@ -16,9 +16,9 @@ spring:
         - http://myadmin-console-india:9001
         enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/account-service?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
-    username: mysqluser
-    password: mysqlpassword
+    url: jdbc:mysql://${MYSQL_DATABASE_HOST:localhost}:${MYSQL_DATABASE_PORT:3306}/${MYSQL_DATABASE:account-service}?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:mysqluser}
+    password: ${MYSQL_PASSWORD:mysqlpassword}
     platform: mysql
   jpa:
     properties:
