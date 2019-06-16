@@ -15,6 +15,18 @@ spring:
         url:
         - http://myadmin-console-india:9001
         enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/customer-service?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+    username: mysqluser
+    password: mysqlpassword
+    platform: mysql
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        hbm2ddl:
+          auto: update
     
 
 management:
