@@ -1,15 +1,20 @@
 package com.study.pattern.customer.service;
 
-import com.study.pattern.customer.model.Customer;
-import com.study.pattern.customer.repository.CustomerRepository;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
+import com.study.pattern.customer.model.Customer;
+import com.study.pattern.customer.repository.CustomerRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     @Resource
@@ -18,12 +23,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
 
     public ArrayList<Customer> findAll() {
+    	log.info("Invoking findAll method");
         return (ArrayList<Customer>) customerRepository.findAll();
     }
 
     @Override
     public Customer findByCustomerName(String name) {
-        return customerRepository.findByCustomerName(name);
+    	log.info("Invoking findByCustomerName for name {}",name);
+        return customerRepository.findByName(name);
     }
 
     @Override
