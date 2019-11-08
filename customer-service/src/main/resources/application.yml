@@ -13,8 +13,21 @@ spring:
     admin:
       client:
         url:
-        - http://myadmin-console-india:9001
+         - http://myadmin-console-india:9001
         enabled: false
+
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_DATABASE_HOST:localhost}:${MYSQL_DATABASE_PORT:3306}/${MYSQL_DATABASE:customer-service}?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:mysqluser}
+    password: ${MYSQL_PASSWORD:mysqlpassword}
+    platform: mysql
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        hbm2ddl:
+          auto: update
     
 
 management:

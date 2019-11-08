@@ -1,0 +1,24 @@
+
+Step1 : Run the below command in docker host machine
+
+docker run --name account-service_mysql \
+-p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=mysqlpassword \
+-e MYSQL_USER=mysqluser \
+-e MYSQL_PASSWORD=org_user_password \
+-e MYSQL_DATABASE=account-service \
+-d mysql:latest
+
+
+
+Step2 : docker exec -it <<container_id> bash
+
+
+
+Step3:  mysql -u root -p
+
+Step4: show databases;
+
+Step5: use account-service;
+
+Step6: select * from <<table_name>>
